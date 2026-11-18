@@ -1,8 +1,8 @@
 # cintel-05-drift-detection
 
 [![Python 3.14](https://img.shields.io/badge/python-3.14%2B-blue?logo=python)](pyproject.toml)
-[![CI](https://github.com/denisecase/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/denisecase/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml)
-[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://denisecase.github.io/cintel-05-drift-detection/)
+[![CI](https://github.com/ssowers2/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/ssowers2/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml)
+[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://ssowers2.github.io/cintel-05-drift-detection/)
 
 [![uv managed](https://img.shields.io/badge/uv-managed-DE5FE9)](https://docs.astral.sh/uv/)
 [![ty type checked](https://img.shields.io/badge/ty-type_checked-2F80ED)](https://docs.astral.sh/ty/)
@@ -13,9 +13,9 @@
 
 ## Project Overview
 
-Author: Denise Case
+Author: Sabriya Sowers
 
-Date: 2026 October
+Date: 2026 November
 
 This project introduces drift detection.
 
@@ -112,7 +112,7 @@ uv run pytest
 
 ## Project Documentation
 
-The [hosted documentation site](https://denisecase.github.io/cintel-05-drift-detection/)
+The [hosted documentation site](https://ssowers2.github.io/cintel-05-drift-detection/)
 is published using Zensical and GitHub Pages.
 
 The documentation site is used to present the project report,
@@ -123,10 +123,11 @@ interpretation, and conclusions.
 
 This project includes continuous integration and continuous deployment (CI/CD)
 to check project files and publish the docs.
+
 GitHub Actions include:
 
-- [CI: Python and Documentation Checks](https://github.com/denisecase/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml)
-- [CD: Documentation Deployment](https://github.com/denisecase/cintel-05-drift-detection/actions/workflows/deploy-zensical.yml)
+- [CI: Python and Documentation Checks](https://github.com/ssowers2/cintel-05-drift-detection/actions/workflows/ci-python-zensical.yml)
+- [CD: Documentation Deployment](https://github.com/ssowers2/cintel-05-drift-detection/actions/workflows/deploy-zensical.yml)
 
 ## Developer Reference
 
@@ -211,7 +212,8 @@ testing, documentation, and code quality.
 
 ## Links
 
-- [Hosted Documentation](https://denisecase.github.io/cintel-05-drift-detection/)
+- [GitHub Repository](https://github.com/ssowers2/cintel-05-drift-detection)
+- [Hosted Documentation](https://ssowers2.github.io/cintel-05-drift-detection/)
 - [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
 - [Citation](CITATION.cff)
 - [License](LICENSE)
