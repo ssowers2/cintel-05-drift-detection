@@ -75,6 +75,79 @@ After increasing the requests drift threshold from 20.0 to 40.0, requests were n
 
 **Conclusion:** Increasing the threshold made drift detection less sensitive to changes in request volume without affecting the underlying measurements.
 
+## Governance Drift Detection — Custom Application
+
+### Problem
+
+This customization applies drift detection to synthetic healthcare
+metadata governance measurements rather than system performance metrics.
+
+The objective is to identify meaningful changes in metadata completeness,
+data ownership coverage, stewardship coverage, and documentation gaps.
+
+### Data
+
+The data was carried forward from Project 04: Rolling Monitoring.
+
+The primary dataset is `data/governance_metrics_timeseries.csv`,
+which contains 12 weekly observations.
+
+Supporting asset-level records are available in
+`data/governance_inventory_timeseries.csv`.
+
+See the [Governance Data Card](data-card.md) for additional details.
+
+### Techniques Applied
+
+The governance pipeline applies the same techniques demonstrated
+in the instructor's example:
+
+1. Load data using Polars.
+2. Establish reference and current observation periods.
+3. Calculate the average of each metric for both periods.
+4. Calculate the difference between the averages.
+5. Apply drift thresholds.
+6. Save the results as a CSV artifact.
+
+### Methods and Settings
+
+The 12 weekly observations were divided into two periods:
+
+- Reference: August 24–September 28, 2026 (6 weeks).
+- Current: October 5–November 9, 2026 (6 weeks).
+
+Drift was evaluated using the absolute difference between period averages.
+
+An illustrative threshold of 20 percentage points was selected
+for all four governance metrics.
+
+This threshold is used to demonstrate the detection method
+and is not an established healthcare governance standard.
+
+### Governance Drift Results
+
+| Governance Metric | Reference Mean | Current Mean | Change (pp) | Drift Flag |
+|---|---:|---:|---:|---|
+| Metadata completeness | 25.28% | 51.39% | +26.11 | True |
+| Ownership coverage | 65.28% | 87.78% | +22.50 | True |
+| Stewardship coverage | 49.72% | 65.83% | +16.11 | False |
+| Documentation gaps | 64.72% | 42.50% | -22.22 | True |
+
+Three of the four governance metrics exceeded the selected threshold.
+
+All four metrics moved in a favorable direction. Completeness,
+ownership, and stewardship coverage increased, while documentation
+gaps decreased.
+
+Drift flags indicate changes requiring interpretation rather than
+automatically identifying problems.
+
+### Governance Pipeline and Artifacts
+
+- [Governance Drift Detection Script](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/src/cintel/governance_drift_detector.py)
+- [Governance Drift Summary](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/artifacts/governance_drift_summary.csv)
+- [Governance Data Card](data-card.md)
+
 ## Interpretation
 
 The current period shows higher average request volume,
