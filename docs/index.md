@@ -20,9 +20,7 @@ Two datasets represent different observation periods:
 Each contains measurements of requests,
 errors, and total latency.
 
-[View Reference Data](https://github.com/denisecase/cintel-05-drift-detection/blob/main/data/reference_metrics.csv)
-
-[View Current Data](https://github.com/denisecase/cintel-05-drift-detection/blob/main/data/current_metrics.csv)
+[View Data](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/data)
 
 ## Methods
 
@@ -36,7 +34,7 @@ It then calculates:
 Drift is flagged when the absolute difference
 exceeds the configured threshold.
 
-The example thresholds are:
+The original example uses the following thresholds:
 
 - Requests: 20.
 - Errors: 2.
@@ -53,11 +51,27 @@ be justified for a production monitoring system.
 | Errors             |            2.3 |          6.3 |       +4.0 |
 | Total latency (ms) |          3,835 |        5,670 |     +1,835 |
 
-**All three metrics exceeded their configured thresholds.**
+In the original example, all three metrics exceeded their configured thresholds. After increasing the requests threshold to 40.0, only errors and latency were flagged as drifting.
 
-[View Drift Results](https://github.com/denisecase/cintel-05-drift-detection/blob/main/artifacts/drift_summary.csv)
+[View Drift Results](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/artifacts)
 
-[View Detailed Summary](https://github.com/denisecase/cintel-05-drift-detection/blob/main/artifacts/drift_summary_long.csv)
+[View Detailed Summary](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/artifacts)
+
+## Custom Modifications
+
+### Adjusting the Requests Drift Threshold
+
+**Change:** Updated `REQUESTS_DRIFT_THRESHOLD` from `20.0` to `40.0` in `src/cintel/drift_detector.py`.
+
+**Reason:** To evaluate how increasing a drift threshold affects which metrics are flagged as drifting.
+
+**Prediction:** If the requests drift threshold increases from 20.0 to 40.0, requests will no longer be flagged as drifting because the observed difference of 36.2 is below the new threshold.
+
+**Verification:** Used `git status` and `git diff` to confirm that only the requests threshold was changed.
+
+**Results:** The prediction was confirmed. The requests drift flag changed from `True` to `False`, while the errors and latency drift flags remained `True`. The pipeline executed successfully.
+
+**Conclusion:** Increasing the threshold made drift detection less sensitive to changes in request volume without affecting the underlying measurements.
 
 ## Interpretation
 
@@ -70,6 +84,11 @@ differently from its reference behavior.
 An analyst could investigate whether the changes
 reflect increased workload, changing demand,
 or a potential performance problem.
+
+Although request volume increased, the modified
+threshold no longer flags it as drifting.This demonstrates how
+threshold selection influences which changes are identified
+for further investigation.
 
 ## Limitations
 
@@ -103,9 +122,9 @@ not proof that a system is malfunctioning.
 
 ## Project Links
 
-- [GitHub Repository](https://github.com/denisecase/cintel-05-drift-detection)
-- [Example Pipeline](https://github.com/denisecase/cintel-05-drift-detection/blob/main/src/cintel/drift_detector.py)
-- [Results and Artifacts](https://github.com/denisecase/cintel-05-drift-detection/tree/main/artifacts)
+- [GitHub Repository](https://github.com/ssowers2/cintel-05-drift-detection)
+- [Example Pipeline](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/src/cintel)
+- [Results and Artifacts](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/artifacts)
 
 ## Project Resources
 
