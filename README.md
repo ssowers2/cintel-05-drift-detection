@@ -148,6 +148,22 @@ Pipeline executed successfully!
 ========================
 ```
 
+### Technical Modification: Requests Drift Threshold
+
+A controlled experiment was completed by increasing the requests drift threshold from `20.0` to `40.0` in `src/cintel/drift_detector.py`.
+
+The original pipeline flagged requests, errors, and latency as drifting. After the modification:
+
+| Metric | Original Drift Flag | Modified Drift Flag |
+|---|---|---|
+| Requests | True | False |
+| Errors | True | True |
+| Latency | True | True |
+
+The experiment confirmed that increasing a drift threshold reduces detection sensitivity without changing the underlying measurements.
+
+See the [Project Documentation](https://ssowers2.github.io/cintel-05-drift-detection/) for the prediction, verification, and results.
+
 ### Planned Custom Results
 
 The governance customization is expected to produce:

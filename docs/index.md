@@ -45,11 +45,15 @@ be justified for a production monitoring system.
 
 ## Results
 
-| Metric             | Reference Mean | Current Mean | Difference |
-| ------------------ | -------------: | -----------: | ---------: |
-| Requests           |          128.3 |        164.5 |      +36.2 |
-| Errors             |            2.3 |          6.3 |       +4.0 |
-| Total latency (ms) |          3,835 |        5,670 |     +1,835 |
+The original example compared historical and current system metrics. All three metrics were initially flagged as drifting.
+
+| Metric | Reference Mean | Current Mean | Difference | Modified Threshold | Drift Flag |
+|---|---:|---:|---:|---:|---|
+| Requests | 128.3 | 164.5 | +36.2 | 40.0 | False |
+| Errors | 2.3 | 6.3 | +4.0 | 2.0 | True |
+| Total latency (ms) | 3,835 | 5,670 | +1,835 | 1,000 | True |
+
+After increasing the requests drift threshold from 20.0 to 40.0, requests were no longer flagged as drifting. Errors and latency remained flagged because their differences still exceeded the configured thresholds.
 
 In the original example, all three metrics exceeded their configured thresholds. After increasing the requests threshold to 40.0, only errors and latency were flagged as drifting.
 
