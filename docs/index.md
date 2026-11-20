@@ -55,8 +55,6 @@ The original example compared historical and current system metrics. All three m
 
 After increasing the requests drift threshold from 20.0 to 40.0, requests were no longer flagged as drifting. Errors and latency remained flagged because their differences still exceeded the configured thresholds.
 
-In the original example, all three metrics exceeded their configured thresholds. After increasing the requests threshold to 40.0, only errors and latency were flagged as drifting.
-
 [View Drift Results](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/artifacts)
 
 [View Detailed Summary](https://github.com/ssowers2/cintel-05-drift-detection/tree/main/artifacts)
@@ -89,10 +87,9 @@ An analyst could investigate whether the changes
 reflect increased workload, changing demand,
 or a potential performance problem.
 
-Although request volume increased, the modified
-threshold no longer flags it as drifting.This demonstrates how
-threshold selection influences which changes are identified
-for further investigation.
+Although request volume increased, the modified threshold no
+longer flags it as drifting. This demonstrates how threshold selection
+influences which changes are identified for further investigation.
 
 ## Limitations
 
