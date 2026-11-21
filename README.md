@@ -223,19 +223,33 @@ not necessarily a negative outcome.
 
 ![Governance Drift Visualization](docs/images/governance_drift_chart.png)
 
-#### Run the Governance Pipeline
+## Interactive Governance Dashboard
+
+- [**Interactive Governance Dashboard**](https://ssowers2.github.io/cintel-05-drift-detection/governance/)
+
+The interactive Marimo application allows users to explore governance drift detection directly in the browser.
+
+- Compare reference and current six-week reporting periods.
+- Examine four healthcare metadata governance metrics.
+- Adjust the drift threshold using an interactive slider.
+- Explore changes through a dynamic Plotly visualization.
+- Identify changes that exceed the selected threshold.
+
+At the default threshold of 20 percentage points, three of four metrics are flagged for drift. The application uses synthetic data.
+
+### Run the Governance Pipeline
 
 ```powershell
 python -m cintel.governance_drift_detector
 ```
 
-#### Generate the Visualization
+### Generate the Visualization
 
 ```powershell
 python -m cintel.governance_visualization
 ```
 
-#### Generated Artifacts
+### Generated Artifacts
 
 - `artifacts/governance_drift_summary.csv`
 - `artifacts/governance_drift_chart.png`
@@ -356,7 +370,7 @@ git push -u origin main
 This project uses professional Python tools for development, testing, documentation, and code quality.
 
 - [uv](https://docs.astral.sh/uv/) – Python environments and dependencies.
-- [Ruff](https://docs.astral.sh/ruff/) – Python linting and formatting, configured in [.ruff.toml](.ruff.toml).Remove-Item -Recurse -Force site\app -ErrorAction SilentlyContinue
+- [Ruff](https://docs.astral.sh/ruff/) – Python linting and formatting, configured in [.ruff.toml](.ruff.toml).
 - [ty](https://docs.astral.sh/ty/) – Python type checking.
 - [pytest](https://docs.pytest.org/) – automated Python testing, configured in [.pytest.toml](.pytest.toml).
 - [prek](https://prek.j178.dev/) – Git hooks and automated checks, configured in [prek.toml](prek.toml).

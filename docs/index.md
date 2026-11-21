@@ -10,6 +10,12 @@ differs meaningfully from an earlier reference period.
 The objective is to detect changes in operational metrics
 that may indicate a need for investigation.
 
+### Interactive Governance Dashboard
+
+- [**Interactive Governance Dashboard**](https://ssowers2.github.io/cintel-05-drift-detection/governance/)
+
+Explore governance drift detection using an interactive Marimo dashboard with four governance metrics, a configurable drift threshold, and a dynamic Plotly visualization.
+
 ## Data
 
 Two datasets represent different observation periods:
@@ -251,7 +257,7 @@ not proof that a system is malfunctioning.
 - [**Project Instructions**](project-instructions.md)
 - [**Glossary**](glossary.md)
 - [**API**](api.md)
-- [**Reactive App**](./app/index.html)
+- [**Interactive Governance Dashboard**](https://ssowers2.github.io/cintel-05-drift-detection/governance/)
 - [Governance Data Card](data-card.md)
 
 ## Project Links
