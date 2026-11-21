@@ -356,7 +356,7 @@ git push -u origin main
 This project uses professional Python tools for development, testing, documentation, and code quality.
 
 - [uv](https://docs.astral.sh/uv/) – Python environments and dependencies.
-- [Ruff](https://docs.astral.sh/ruff/) – Python linting and formatting, configured in [.ruff.toml](.ruff.toml).
+- [Ruff](https://docs.astral.sh/ruff/) – Python linting and formatting, configured in [.ruff.toml](.ruff.toml).Remove-Item -Recurse -Force site\app -ErrorAction SilentlyContinue
 - [ty](https://docs.astral.sh/ty/) – Python type checking.
 - [pytest](https://docs.pytest.org/) – automated Python testing, configured in [.pytest.toml](.pytest.toml).
 - [prek](https://prek.j178.dev/) – Git hooks and automated checks, configured in [prek.toml](prek.toml).
@@ -364,6 +364,7 @@ This project uses professional Python tools for development, testing, documentat
 - [Polars](https://pola.rs/) – DataFrame processing and analysis.
 - [Marimo](https://marimo.io/) – reactive Python applications.
 - [Matplotlib](https://matplotlib.org/) – governance drift visualization.
+- [Plotly](https://plotly.com/python/) – interactive governance drift visualization in the Marimo application.
 
 ## Links
 
