@@ -20,11 +20,11 @@
 
 This project introduces drift detection by comparing current measurements against historical reference data to identify changes that exceed defined thresholds.
 
-The project will extend the **Metadata Completeness & Governance Readiness Monitor** developed in previous Continuous Intelligence assignments.
+This project extends the **Metadata Completeness & Governance Readiness Monitor** developed in previous Continuous Intelligence assignments.
 
 Project 03 introduced data governance metrics and signals. Project 04 expanded the project with weekly monitoring, rolling averages, and an interactive dashboard.
 
-Project 05 will build on that work by introducing drift detection to identify changes in metadata quality, ownership, and stewardship coverage that may require further investigation.
+Project 05 builds on that work by applying drift detection to identify meaningful changes in metadata completeness, ownership coverage, stewardship coverage, and documentation gaps.
 
 The project uses synthetic healthcare metadata and does not contain actual patient information.
 
@@ -36,7 +36,7 @@ Project configuration is maintained in [pyproject.toml](pyproject.toml).
 |---|---|---|
 | Project 03 | Signals and feature engineering | Established metadata quality and governance metrics |
 | Project 04 | Rolling monitoring | Tracked governance metrics over time using rolling averages and an interactive dashboard |
-| Project 05 | Drift detection | Planned comparison of historical and current governance metrics to identify meaningful changes |
+| Project 05 | Drift detection | Compared historical and current governance metrics to identify changes exceeding defined thresholds |
 
 **Previous project:** [Project 04 – Rolling Monitoring](https://github.com/ssowers2/cintel-04-rolling-monitoring)
 
@@ -57,18 +57,31 @@ Both datasets contain:
 - `errors` – number of failed requests.
 - `total_latency_ms` – total response time in milliseconds.
 
-### Planned Custom Governance Data
+### Custom Governance Data
 
-The custom project will build on the synthetic healthcare metadata used in Project 04.
+The governance customization uses synthetic healthcare metadata
+carried forward from Project 04.
 
-The planned metrics include:
+The primary dataset, `data/governance_metrics_timeseries.csv`,
+contains 12 weekly observations.
+
+A supporting asset-level dataset,
+`data/governance_inventory_timeseries.csv`,
+contains records for 60 synthetic data assets across the same
+12-week period.
+
+The monitored metrics include:
 
 - **Metadata completeness:** Percentage of required metadata fields populated.
 - **Data ownership coverage:** Percentage of assets with assigned data owners.
 - **Stewardship coverage:** Percentage of assets with assigned data stewards.
-- **Documentation gaps:** Missing or incomplete metadata documentation.
+- **Documentation gaps:** Percentage of metadata documentation that is missing or incomplete.
 
-Historical measurements will serve as the reference period, while more recent measurements will be evaluated for potential drift.
+The first six weeks establish the reference period, and the
+final six weeks represent the current period.
+
+See the [Governance Data Card](docs/data-card.md) for additional
+information about the datasets and their limitations.
 
 ## Approach
 
@@ -82,20 +95,27 @@ The example pipeline uses Polars to:
 4. Flag measurements that indicate possible drift.
 5. Save the results as CSV artifacts.
 
-### Planned Governance Customization
+### Governance Customization
 
-The custom implementation will follow a similar approach:
+The custom pipeline applies the same drift detection techniques
+used in the instructor's example:
 
-1. Reuse the synthetic governance metrics developed in Project 04.
-2. Establish a historical baseline for selected governance metrics.
-3. Compare more recent measurements against the baseline.
-4. Apply thresholds to identify potentially meaningful changes.
-5. Generate drift flags for metrics requiring further review.
-6. Explore visualizations to communicate the results.
+1. Load the synthetic governance metrics using Polars.
+2. Divide the 12 weekly observations into reference and current periods.
+3. Calculate the average of each metric for both periods.
+4. Calculate the difference between the averages.
+5. Apply an illustrative threshold of 20 percentage points.
+6. Flag changes exceeding the threshold.
+7. Export the governance drift summary to CSV.
+8. Generate a visualization of the results.
 
-The goal is to demonstrate how drift detection can support ongoing data quality monitoring and help identify changes that may require investigation.
+Drift is flagged when the absolute difference exceeds the
+configured threshold.
 
-Drift flags will be treated as indicators for review rather than automatic evidence of a data quality problem.
+The drift flags identify meaningful changes under the selected
+criteria, not necessarily negative outcomes. Interpretation
+considers whether each change represents an improvement,
+decline, or area requiring further investigation.
 
 ## Project Components
 
@@ -108,7 +128,15 @@ Drift flags will be treated as indicators for review rather than automatic evide
 - [.github/workflows/](.github/workflows/) – automated checks and documentation deployment.
 - [docs/](docs/) – project documentation.
 
-Additional governance-specific files and artifacts will be documented as the customization is developed.
+### Governance-Specific Components
+
+- [src/cintel/governance_drift_detector.py](src/cintel/governance_drift_detector.py) – governance drift detection pipeline.
+- [src/cintel/governance_visualization.py](src/cintel/governance_visualization.py) – governance drift visualization script.
+- [data/governance_metrics_timeseries.csv](data/governance_metrics_timeseries.csv) – weekly governance metrics.
+- [data/governance_inventory_timeseries.csv](data/governance_inventory_timeseries.csv) – supporting asset-level observations.
+- [artifacts/governance_drift_summary.csv](artifacts/governance_drift_summary.csv) – governance drift results.
+- [artifacts/governance_drift_chart.png](artifacts/governance_drift_chart.png) – generated visualization.
+- [docs/data-card.md](docs/data-card.md) – governance dataset documentation.
 
 ## Run the Project
 
@@ -164,17 +192,56 @@ The experiment confirmed that increasing a drift threshold reduces detection sen
 
 See the [Project Documentation](https://ssowers2.github.io/cintel-05-drift-detection/) for the prediction, verification, and results.
 
-### Planned Custom Results
+### Governance Drift Detection — Custom Application
 
-The governance customization is expected to produce:
+The Project 05 customization applies drift detection to synthetic
+healthcare metadata governance metrics carried forward from Project 04.
 
-- Historical and current governance metric comparisons.
-- Differences between baseline and recent measurements.
-- Drift flags based on selected thresholds.
-- Visualizations highlighting changes in governance metrics.
-- Interpretation of findings and possible areas for investigation.
+The pipeline compares the first six weeks of observations against
+the final six weeks using average values and illustrative thresholds
+of 20 percentage points.
 
-Results will be added after the custom pipeline is implemented and tested.
+#### Governance Results
+
+| Governance Metric | Change (pp) | Drift Flag |
+|---|---:|---|
+| Metadata completeness | +26.11 | True |
+| Ownership coverage | +22.50 | True |
+| Stewardship coverage | +16.11 | False |
+| Documentation gaps | -22.22 | True |
+
+Three of the four governance metrics exceeded the drift threshold.
+
+All four metrics improved. Increases in completeness, ownership,
+and stewardship coverage represent positive changes, while a
+decrease in documentation gaps represents improved documentation.
+
+Drift indicates a meaningful change under the selected threshold,
+not necessarily a negative outcome.
+
+#### Governance Visualization
+
+![Governance Drift Visualization](docs/images/governance_drift_chart.png)
+
+#### Run the Governance Pipeline
+
+```powershell
+python -m cintel.governance_drift_detector
+```
+
+#### Generate the Visualization
+
+```powershell
+python -m cintel.governance_visualization
+```
+
+#### Generated Artifacts
+
+- `artifacts/governance_drift_summary.csv`
+- `artifacts/governance_drift_chart.png`
+
+See the [Project Documentation](https://ssowers2.github.io/cintel-05-drift-detection/)
+for detailed methodology, results, and interpretation.
 
 ## Verification
 
@@ -184,23 +251,38 @@ Run automated tests:
 uv run pytest
 ```
 
-Additional tests will be added as needed for the governance drift detection implementation.
+### Verification Results
+
+The final project verification was completed successfully.
+
+- **Automated tests:** 1 passed.
+- **Total test coverage:** 37%.
+- **Required coverage:** 20% (met).
+- **Documentation build:** Successful; no issues found.
+- **Governance drift pipeline:** Executed successfully.
+- **Governance visualization:** Generated successfully.
+
+The existing automated test suite does not directly cover the
+governance drift detector or visualization scripts. These
+components were verified through successful execution and
+review of the generated results.
+
+Additional automated tests could be developed to validate
+governance-specific calculations and drift thresholds.
 
 ## Project Documentation
 
 The [hosted documentation site](https://ssowers2.github.io/cintel-05-drift-detection/) is published using Zensical and GitHub Pages.
 
-The documentation will present the project report, including:
+The project documentation includes the instructor's example,
+the controlled threshold experiment, and the governance
+customization.
 
-- Data
-- Methods
-- Results
-- Visualizations
-- Interpretation
-- Limitations
-- Conclusions
+The governance report documents the datasets, methods,
+drift results, visualization, interpretation, and limitations.
 
-The final report will explain how drift detection extends the governance monitoring work from Project 04.
+Project 05 demonstrates how drift detection extends the
+rolling governance monitoring developed in Project 04.
 
 ## CI/CD and GitHub Actions
 
@@ -281,6 +363,7 @@ This project uses professional Python tools for development, testing, documentat
 - [Zensical](https://zensical.org/) – project documentation, configured in [zensical.toml](zensical.toml).
 - [Polars](https://pola.rs/) – DataFrame processing and analysis.
 - [Marimo](https://marimo.io/) – reactive Python applications.
+- [Matplotlib](https://matplotlib.org/) – governance drift visualization.
 
 ## Links
 

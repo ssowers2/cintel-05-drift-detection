@@ -142,13 +142,72 @@ gaps decreased.
 Drift flags indicate changes requiring interpretation rather than
 automatically identifying problems.
 
+### Governance Drift Visualization
+
+The following chart compares changes in governance metrics between
+the historical reference period and the current monitoring period.
+
+![Healthcare Metadata Governance Drift](images/governance_drift_chart.png)
+
+The chart displays changes in percentage points.
+
+- Teal bars indicate changes that exceeded the drift threshold.
+- Gray bars indicate changes that did not exceed the threshold.
+- Orange dashed lines represent the illustrative thresholds of
+  -20 and +20 percentage points.
+- Negative values represent decreases, while positive values
+  represent increases.
+
+### Interpretation of Governance Results
+
+All four governance metrics improved between the reference and
+current periods.
+
+Metadata completeness increased by 26.11 percentage points,
+and ownership coverage increased by 22.50 percentage points.
+Both exceeded the selected drift threshold.
+
+Stewardship coverage increased by 16.11 percentage points but
+did not exceed the threshold.
+
+Documentation gaps decreased by 22.22 percentage points,
+representing an improvement in documentation coverage.
+
+Three of the four metrics were flagged as drifting.
+
+These results demonstrate that drift is not necessarily negative.
+Drift detection identifies changes that exceed a defined threshold,
+while interpretation determines whether those changes represent
+improvements, declines, or areas requiring investigation.
+
+The results are based on synthetic data and do not represent
+actual healthcare organizational performance.
+
+### Governance Analysis Limitations
+
+The analysis uses 12 weeks of synthetic data divided into two
+six-week periods. The small number of observations limits the
+ability to identify longer-term trends or seasonal patterns.
+
+The 20-percentage-point threshold is illustrative and has not
+been validated against organizational requirements.
+
+Comparing averages may also hide weekly fluctuations or
+changes in the underlying inventory.
+
+The results demonstrate the drift detection technique but
+should not be interpreted as evidence of actual organizational
+performance.
+
 ### Governance Pipeline and Artifacts
 
 - [Governance Drift Detection Script](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/src/cintel/governance_drift_detector.py)
 - [Governance Drift Summary](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/artifacts/governance_drift_summary.csv)
+- [Governance Drift Visualization](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/artifacts/governance_drift_chart.png)
 - [Governance Data Card](data-card.md)
+- [Governance Visualization Script](https://github.com/ssowers2/cintel-05-drift-detection/blob/main/src/cintel/governance_visualization.py)
 
-## Interpretation
+## Original Example — Interpretation
 
 The current period shows higher average request volume,
 higher average errors, and greater total latency.
@@ -164,7 +223,7 @@ Although request volume increased, the modified threshold no
 longer flags it as drifting. This demonstrates how threshold selection
 influences which changes are identified for further investigation.
 
-## Limitations
+## Original Example — Limitations
 
 The approach compares means using fixed thresholds.
 
@@ -178,7 +237,7 @@ Additional normalized signals, such as error rate
 and average latency per request, would help
 distinguish workload changes from degraded performance.
 
-## Conclusion
+## Original Example — Conclusion
 
 Baseline comparisons provide a practical starting point
 for detecting changes in operational behavior.
@@ -193,6 +252,7 @@ not proof that a system is malfunctioning.
 - [**Glossary**](glossary.md)
 - [**API**](api.md)
 - [**Reactive App**](./app/index.html)
+- [Governance Data Card](data-card.md)
 
 ## Project Links
 
